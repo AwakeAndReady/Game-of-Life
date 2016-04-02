@@ -9,30 +9,15 @@ import gameOfLife4.things.Snake;
 
 public class Playground {
   
-  private Scanner inputScanner = new Scanner( System.in );
-  
-  public Direction getDirection() {
-    switch ( inputScanner.next() ) {
-      case "w":
-        return Direction.NORTH;
-      case "s":
-        return Direction.SOUTH;
-      case "a":
-        return Direction.WEST;
-      case "d":
-        return Direction.EAST;
-      default:
-        return null;
-    }
-  }
-  
   public void play() {
     
     // Instanziere Spielobjekte
-    Player player = new Player( new Point( 10, 9 ) );
+    Player player = new Player( new Point( 10, 9 ), '&' );
     Snake snake = new Snake( new Point( 30, 2 ) );
     Gold gold = new Gold( new Point( 6, 6 ) );
     Door door = new Door( new Point( 0, 5 ) );
+    
+    GameController gc = new GameController();
     
     while ( true ) {
       
@@ -73,7 +58,7 @@ public class Playground {
       
       // Bewegungen des Spielers und der Schlange
       
-      Direction direction = getDirection();
+      Direction direction = gc.getDirection();
       
       if ( direction != null ) {
         player.move( direction );
