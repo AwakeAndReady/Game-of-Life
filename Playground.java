@@ -12,7 +12,7 @@ public class Playground {
   public void play() {
     
     // Instanziere Spielobjekte
-    Player player = new Player( new Point( 10, 9 ), '&' );
+    Player player = new Player( new Point( 10, 9 ) );
     Snake snake = new Snake( new Point( 30, 2 ) );
     Gold gold = new Gold( new Point( 6, 6 ) );
     Door door = new Door( new Point( 0, 5 ) );
