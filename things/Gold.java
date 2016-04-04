@@ -1,4 +1,4 @@
-package gameOfLife4.things;
+package gameOfLife5.things;
 
 import java.awt.Point;
 

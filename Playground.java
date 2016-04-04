@@ -1,11 +1,11 @@
-package gameOfLife4;
+package gameOfLife5;
 
 import java.awt.Point;
 import java.util.Scanner;
-import gameOfLife4.things.Door;
-import gameOfLife4.things.Gold;
-import gameOfLife4.things.Player;
-import gameOfLife4.things.Snake;
+import gameOfLife5.things.Door;
+import gameOfLife5.things.Gold;
+import gameOfLife5.things.Player;
+import gameOfLife5.things.Snake;
 
 public class Playground {
   

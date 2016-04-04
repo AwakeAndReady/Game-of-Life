@@ -1,8 +1,8 @@
-package gameOfLife4.things;
+package gameOfLife5.things;
 
 import java.awt.Point;
 import java.util.Scanner;
-import gameOfLife4.Direction;
+import gameOfLife5.Direction;
 
 public class Player extends Thing {
   

@@ -1,4 +1,4 @@
-package gameOfLife4;
+package gameOfLife5;
 
 public enum Direction {
   
