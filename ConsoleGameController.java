@@ -6,11 +6,11 @@ import java.util.Scanner;
 public class ConsoleGameController implements GameController {
   
   /*
-   * Bleibt möglichst dumm, kümmert sich nicht um den Spielablauf.
+   * Bleibt möglichst "dumm", kümmert sich nicht um den Spielablauf.
    * Steuert die Ein und Ausgabe an sich.
    */
   
-  private OnMoveListener onMoveListener;
+  private Playground playground;
   
   private Scanner inputScanner = new Scanner( System.in );
   
@@ -32,36 +32,30 @@ public class ConsoleGameController implements GameController {
     }
   }
   
-  
-  
-  /* (non-Javadoc)
-   * @see gameOfLife5.GameController#draw(gameOfLife5.Playground)
-   */
-  @Override public void draw(Playground pg) {
-    // Raster mit Figuren zeichnen
-    for ( int y = 0; y < pg.getRows(); y++ ) {
-      for ( int x = 0; x < pg.getCollums(); x++ ) {
-        Point p = pg.getPoint(x, y);
-        if ( pg.getPlayer().isAtPosition( p ) )
-          System.out.print( pg.getPlayer().getIcon() );
-        else if ( pg.getSnake().isAtPosition( p ) )
-          System.out.print( pg.getSnake().getIcon() );
-        else if ( pg.getGold().isAtPosition( p ) )
-          System.out.print( pg.getGold().getIcon() );
-        else if ( pg.getDoor().isAtPosition( p ) )
-          System.out.print( pg.getDoor().getIcon() );
+  private void draw() {
+    for ( int y = 0; y < playground.getRows(); y++ ) {
+      for ( int x = 0; x < playground.getCollums(); x++ ) {
+        Point p = playground.getPoint(x, y);
+        if ( playground.getPlayer().isAtPosition( p ) )
+          System.out.print( playground.getPlayer().getIcon() );
+        else if ( playground.getSnake().isAtPosition( p ) )
+          System.out.print( playground.getSnake().getIcon() );
+        else if ( playground.getGold().isAtPosition( p ) )
+          System.out.print( playground.getGold().getIcon() );
+        else if ( playground.getDoor().isAtPosition( p ) )
+          System.out.print( playground.getDoor().getIcon() );
         else
           System.out.print( '.' );
       }
       System.out.println();
     }
     
-    if ( pg.hasWon() ) {
+    if ( playground.hasWon() ) {
       System.out.println( "Gewonnen!" );
       return;
     }
     
-    if ( pg.hasLost() ) {
+    if ( playground.hasLost() ) {
       System.out.println( "ZZZZZZZ. Die Schlange hat dich!" );
     }
     
@@ -69,20 +63,25 @@ public class ConsoleGameController implements GameController {
   
 
   @Override public void run() {
+    draw();
+    
     while ( true ) {
-
-      // Bewegungen des Spielers und der Schlange
       Direction direction = getDirection();
       
-      if ( direction != null && onMoveListener != null ) {
-        onMoveListener.onMove( direction );
+      if ( direction != null && playground != null ) {
+        playground.onMove( direction );
+        draw();
+        
+        if (playground.hasLost() || playground.hasWon()) {
+          break;
+        }
       }
       
-    } // End while    
+    } // End while  
   }
 
-  @Override public void setOnMoveListener( OnMoveListener listener ) {
-    this.onMoveListener = listener;
+  @Override public void setPlayground( Playground playground ) {
+    this.playground = playground;
   }
   
 }
