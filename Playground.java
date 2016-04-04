@@ -9,47 +9,47 @@ import gameOfLife4.things.Snake;
 
 public class Playground {
   
+  /*
+   * contains rules, states, 
+   */
+  
+  private final int collums;
+  private final int rows;
+  private final Point[][] points;
+  
+  private final Player player = new Player( new Point( 10, 9 ) );
+  private final Snake snake = new Snake( new Point( 30, 2 ) );
+  private final Gold gold = new Gold( new Point( 6, 6 ) );
+  private final Door door = new Door( new Point( 0, 5 ) );
+  
+  private final GameController gc = new GameController();
+  
+  public Playground( final int collums, final int rows ) {
+    this.collums = collums;
+    this.rows = rows;
+    this.points = new Point[rows][collums];
+    
+    for ( int y = 0; y < rows; y++ ) {
+      for ( int x = 0; x < collums; x++ ) {
+        points[y][x] = new Point( x, y );
+      }
+    }
+  }
+  
+  public boolean hasWon() {
+    return player.isRich() && player.isAtPosition( door );
+  }
+  
+  public boolean hasLost() {
+    return player.isAtPosition( snake );
+  }
+  
   public void play() {
     
-    // Instanziere Spielobjekte
-    Player player = new Player( new Point( 10, 9 ) );
-    Snake snake = new Snake( new Point( 30, 2 ) );
-    Gold gold = new Gold( new Point( 6, 6 ) );
-    Door door = new Door( new Point( 0, 5 ) );
-    
-    GameController gc = new GameController();
+    gc.draw( this );
     
     while ( true ) {
-      
-      // Raster mit Figuren zeichnen
-      for ( int y = 0; y < 10; y++ ) {
-        for ( int x = 0; x < 40; x++ ) {
-          java.awt.Point p = new java.awt.Point( x, y );
-          if ( player.isAtPosition( p ) )
-            System.out.print( player.getIcon() );
-          else if ( snake.isAtPosition( p ) )
-            System.out.print( snake.getIcon() );
-          else if ( gold.isAtPosition( p ) )
-            System.out.print( gold.getIcon() );
-          else if ( door.isAtPosition( p ) )
-            System.out.print( door.getIcon() );
-          else
-            System.out.print( '.' );
-        }
-        System.out.println();
-      }
-      
-      // Status feststellen
-      
-      if ( player.isRich() && player.isAtPosition( door ) ) {
-        System.out.println( "Gewonnen!" );
-        break;
-      }
-      
-      if ( player.isAtPosition( snake ) ) {
-        System.out.println( "ZZZZZZZ. Die Schlange hat dich!" );
-        break;
-      }
+
       
       if ( player.isAtPosition( gold ) ) {
         player.setRich();
@@ -57,7 +57,6 @@ public class Playground {
       }
       
       // Bewegungen des Spielers und der Schlange
-      
       Direction direction = gc.getDirection();
       
       if ( direction != null ) {
@@ -65,13 +64,46 @@ public class Playground {
         snake.follow( player );
       }
       
+      gc.draw( this );
+      
+      if ( hasWon() || hasLost() )
+        break;
+      
     } // End while
     
   }
   
+  public int getCollums() {
+    return collums;
+  }
+  
+  public int getRows() {
+    return rows;
+  }
+  
+  public Point getPoint( int x, int y ) {
+    return points[y][x];
+  }
+  
+  public Player getPlayer() {
+    return player;
+  }
+  
+  public Snake getSnake() {
+    return snake;
+  }
+  
+  public Gold getGold() {
+    return gold;
+  }
+  
+  public Door getDoor() {
+    return door;
+  }
+  
   public static void main( String[] args ) {
     
-    Playground playground = new Playground();
+    Playground playground = new Playground( 40, 10 );
     
     playground.play();
     
