@@ -22,11 +22,12 @@ public class Playground {
   private final Gold gold = new Gold( new Point( 6, 6 ) );
   private final Door door = new Door( new Point( 0, 5 ) );
   
-  private final GameController gc = new GameController();
+  private final GameController gc;
   
-  public Playground( final int collums, final int rows ) {
+  public Playground( final int collums, final int rows, final GameController gc ) {
     this.collums = collums;
     this.rows = rows;
+    this.gc = gc;
     this.points = new Point[rows][collums];
     
     for ( int y = 0; y < rows; y++ ) {
@@ -103,7 +104,7 @@ public class Playground {
   
   public static void main( String[] args ) {
     
-    Playground playground = new Playground( 40, 10 );
+    Playground playground = new Playground( 40, 10, new ConsoleGameController() );
     
     playground.play();
     
