@@ -7,7 +7,7 @@ import gameOfLife5.things.Gold;
 import gameOfLife5.things.Player;
 import gameOfLife5.things.Snake;
 
-public class Playground {
+public class Playground implements OnMoveListener {
   
   /*
    * contains rules, states, 
@@ -28,6 +28,7 @@ public class Playground {
     this.collums = collums;
     this.rows = rows;
     this.gc = gc;
+    this.gc.setOnMoveListener( this );
     this.points = new Point[rows][collums];
     
     for ( int y = 0; y < rows; y++ ) {
@@ -46,32 +47,18 @@ public class Playground {
   }
   
   public void play() {
-    
     gc.draw( this );
-    
-    while ( true ) {
-
-      
-      if ( player.isAtPosition( gold ) ) {
-        player.setRich();
-        gold.hide();
-      }
-      
-      // Bewegungen des Spielers und der Schlange
-      Direction direction = gc.getDirection();
-      
-      if ( direction != null ) {
-        player.move( direction );
-        snake.follow( player );
-      }
-      
-      gc.draw( this );
-      
-      if ( hasWon() || hasLost() )
-        break;
-      
-    } // End while
-    
+    gc.run();
+  }
+  
+  @Override public void onMove( Direction direction ) {
+    player.move( direction );
+    snake.follow( player );
+    if ( player.isAtPosition( gold ) ) {
+      player.setRich();
+      gold.hide();
+    }
+    gc.draw( this );
   }
   
   public int getCollums() {
@@ -109,5 +96,7 @@ public class Playground {
     playground.play();
     
   }
+
+
   
 }

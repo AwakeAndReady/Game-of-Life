@@ -10,12 +10,14 @@ public class ConsoleGameController implements GameController {
    * Steuert die Ein und Ausgabe an sich.
    */
   
+  private OnMoveListener onMoveListener;
+  
   private Scanner inputScanner = new Scanner( System.in );
   
   /* (non-Javadoc)
    * @see gameOfLife5.GameController#getDirection()
    */
-  @Override public Direction getDirection() {
+  private Direction getDirection() {
     switch ( inputScanner.next() ) {
       case "w":
         return Direction.NORTH;
@@ -29,6 +31,8 @@ public class ConsoleGameController implements GameController {
         return null;
     }
   }
+  
+  
   
   /* (non-Javadoc)
    * @see gameOfLife5.GameController#draw(gameOfLife5.Playground)
@@ -61,6 +65,24 @@ public class ConsoleGameController implements GameController {
       System.out.println( "ZZZZZZZ. Die Schlange hat dich!" );
     }
     
+  }
+  
+
+  @Override public void run() {
+    while ( true ) {
+
+      // Bewegungen des Spielers und der Schlange
+      Direction direction = getDirection();
+      
+      if ( direction != null && onMoveListener != null ) {
+        onMoveListener.onMove( direction );
+      }
+      
+    } // End while    
+  }
+
+  @Override public void setOnMoveListener( OnMoveListener listener ) {
+    this.onMoveListener = listener;
   }
   
 }
