@@ -22,13 +22,10 @@ public class Playground {
   private final Gold gold = new Gold( new Point( 6, 6 ) );
   private final Door door = new Door( new Point( 0, 5 ) );
   
-  private final GameController gc;
   
-  public Playground( final int collums, final int rows, final GameController gc ) {
+  public Playground( final int collums, final int rows) {
     this.collums = collums;
     this.rows = rows;
-    this.gc = gc;
-    this.gc.setPlayground( this );
     this.points = new Point[rows][collums];
     
     for ( int y = 0; y < rows; y++ ) {
@@ -46,9 +43,6 @@ public class Playground {
     return player.isAtPosition( snake );
   }
   
-  public void play() {
-    gc.run();
-  }
   
   public void onMove( Direction direction ) {
     player.move( direction );
@@ -90,9 +84,11 @@ public class Playground {
   
   public static void main( String[] args ) {
     
-    Playground playground = new Playground( 40, 10, new ConsoleGameController() );
+    Playground playground = new Playground( 40, 10 );
     
-    playground.play();
+    GameController controller = new ConsoleGameController();
+    
+    controller.run( playground );
     
   }
 
