@@ -1,5 +1,6 @@
 package gameOfLife5;
 
+
 import java.awt.Point;
 import java.util.Scanner;
 
