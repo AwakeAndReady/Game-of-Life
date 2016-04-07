@@ -1,5 +1,6 @@
 package gameOfLife5;
 
+
 public interface GameController {
 
   /**
