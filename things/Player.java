@@ -8,7 +8,7 @@ public class Player extends Thing {
   
   private boolean isRich = false;
   
-  public Player( Point position ) {
+  public Player( Point position) {
     super( position, '&' );
   }
   
